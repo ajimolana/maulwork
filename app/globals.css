@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Poppins", sans-serif;
+}
+
+.stage-16-9 {
+  width: min(100vw, calc(100vh * 16 / 9));
+  height: calc(min(100vw, calc(100vh * 16 / 9)) * 9 / 16);
+  margin: 0 auto;
+  position: relative;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Styling Scrollbar untuk Chrome, Safari, dan Edge */
+::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar vertikal */
+  height: 8px; /* Tinggi scrollbar horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); /* Warna landasan scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2); /* Warna batang scrollbar */
+  border-radius: 10px;
+  border: 2px solid transparent; /* Memberikan efek padding di dalam */
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4); /* Warna saat kursor di atasnya */
+  background-clip: content-box;
+}
+
+/* Styling untuk Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
