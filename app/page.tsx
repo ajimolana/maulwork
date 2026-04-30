@@ -194,7 +194,7 @@ export default function Home() {
               </div>
             </div>       
 
-            <div className="col-span-1 md:col-span-6 relative z-0 overflow-visible order-1 md:order-none -mt-72 sm:-mt-36 md:-mt-10">
+            <div className="col-span-1 md:col-span-6 relative z-0 overflow-visible order-1 md:order-none -mt-48 sm:-mt-24 md:-mt-10">
               <div className="relative w-[260%] -ml-[80%] md:w-[400%] md:-ml-[130%]">
                 <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
               </div>
