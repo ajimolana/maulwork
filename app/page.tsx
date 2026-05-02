@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Lanyard from "./components/Lanyard/Lanyard";
 import RotatingText from "./components/RotatingText/RotatingText";
 import SplitText from "./components/SplitText/SplitText";
@@ -11,8 +11,16 @@ import AnimatedContent from "./components/AnimatedContent/AnimatedContent";
 import DotGrid from "./components/DotGrid/DotGrid";
 import ColorBends from "./components/ColorBends/ColorBends";
 import CardNav from "./components/CardNav/CardNav";
+import LogoLoop from "./components/LogoLoop/LogoLoop";
+
 
 // --- PISAHAN DATA ---
+
+const techLogos = [
+  { node: <span className="text-white font-medium">Teks 1</span>, title: "Teks 1", href: "#" },
+  { node: <span className="text-white font-medium">Teks 2</span>, title: "Teks 2", href: "#" },
+  { node: <span className="text-white font-medium">Teks 3</span>, title: "Teks 3", href: "#" },
+];
 
 const experiencesData = [
   {
@@ -110,26 +118,42 @@ const projectsData = [
 
 const researchData = [
   {
-    id: "foodsecurity",
-    cardTag: "Streamlit",
-    year: "2025",
-    title: "Food Security Forecasting System",
-    shortDesc: "Food Security System for Sulampua's Region.",
-    period: "Jul 2025 - Sep 2025",
-    roleLabel: "Tools",
-    role: "Streamlit",
-    description: "Built a time-series forecasting model to support pension fund planning decisions.",
+    id: "smartcelldrybox",
+    cardTag: "Scientific Paper Competition",
+    year: "2022",
+    title: "Smart Cell Dry Box: Practical Seaweed Processing",
+    shortDesc: "Winning Paper at Milky Way Scientific Paper Competition",
+    period: "July 2022",
+    roleLabel: "Role",
+    role: "Project Lead",
+    description: "Smart Cell Dry Box: Pengolahan Praktis Rumput Laut di Desa Laikang, Kabupaten Takalar, Sulawesi Selatan",
     tasks: [
-      "Collaborated on building a Machine Learning based Food Security Prediction System using the Streamlit framework.",
-      "Performed Predictive Modeling on 5 variables from the National Food Agency’s Food Security Atlas, covering 127 points in the Sulampua region. Model achieved an R2 score of 0.801 and RMSE of 0.887."
+      "-",
     ],
-    heroImage: "./assets/projects/foodsecurity1.png",
+    heroImage: "",
     gallery: [
-      "./assets/projects/foodsecurity1.png",
-      "./assets/projects/foodsecurity2.png",
-      "./assets/projects/foodsecurity3.png"
+      ""
     ],
-    link: "https://foodsecurityforecasting.streamlit.app/"
+    link: ""
+  },
+  {
+    id: "aksinomi2025",
+    cardTag: "Scientific Paper Competition",
+    year: "2025",
+    title: "SIPEKAN: Food Security Prediction System",
+    shortDesc: "Top 10 Paper at Aksinomi Sulampua",
+    period: "October 2025",
+    roleLabel: "Role",
+    role: "Project Lead",
+    description: "SIPEKAN: Sistem Prediksi Ketahanan Pangan berbasis Machine Learning sebagai Supporting Model Perumusan Kebijakan",
+    tasks: [
+      "-",
+    ],
+    heroImage: "",
+    gallery: [
+      ""
+    ],
+    link: ""
   },
 ];
 
@@ -140,6 +164,26 @@ export default function Home() {
   // --- STATE UNTUK GYROSCOPE LANYARD ---
   const [gyroGravity, setGyroGravity] = useState<[number, number, number]>([0, -40, 0]);
   const [showGyroPermission, setShowGyroPermission] = useState(false);
+
+  // --- REFERENSI & LOGIKA SCROLL DOCUMENTATION ---
+  const docsScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = docsScrollRef.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+    };
+  }, [activeProject]);
 
   const navItems = [
     {
@@ -292,10 +336,10 @@ export default function Home() {
           </div>
         </div>
         <div className="mx-auto max-w-[1366px] min-h-[90vh] px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-0">
-            <div className="col-span-1 md:col-span-6 h-full relative z-10 order-2 md:order-none">
-              <div className="flex items-start md:items-center h-full">
-                <div className="flex flex-col gap-6 -mt-28 sm:-mt-10 md:mt-0">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0">
+            <div className="col-span-1 lg:col-span-6 h-full relative z-10 order-2 lg:order-1">
+              <div className="flex items-start lg:items-center h-full">
+                <div className="flex flex-col gap-6 -mt-28 sm:-mt-20 md:-mt-64 lg:mt-0">
                   <AnimatedContent distance={100} direction="vertical" reverse={false} duration={0.8} ease="power3.out" initialOpacity={0} animateOpacity scale={1} threshold={0.1} delay={0}>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2 sm:mt-4 md:mt-32">
                       <h1 className="text-lg sm:text-2xl text-white font-bold">I'm Open to Position as a</h1>
@@ -312,8 +356,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-span-1 md:col-span-6 relative z-0 overflow-visible order-1 md:order-none -mt-48 sm:-mt-24 md:-mt-10">
-              <div className="relative w-[260%] -ml-[80%] md:w-[400%] md:-ml-[130%] flex items-center justify-center">
+            <div className="col-span-1 lg:col-span-6 relative z-0 overflow-visible order-1 lg:order-2 -mt-48 sm:-mt-24 md:-mt-40 lg:-mt-10">
+              <div className="relative w-[260%] -ml-[80%] sm:w-[150%] sm:-ml-[25%] lg:w-[400%] lg:-ml-[130%] flex items-center justify-center">
                 
                 {/* TOMBOL REQUEST GYRO (HANYA MUNCUL DI iOS 13+) */}
                 {showGyroPermission && (
@@ -399,7 +443,7 @@ export default function Home() {
       <section id="research" className="w-full mt-20">
         <div className="mx-auto max-w-[1366px] px-4 sm:px-6">
           <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6">Research</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {researchData.map((project) => (
               <button
                 key={project.id}
@@ -409,21 +453,44 @@ export default function Home() {
               >
                 <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: '0 0 80px rgba(255,255,255,0.18)' }} />
                 <div className="relative overflow-hidden rounded-2xl">
-                  <img src={project.heroImage} alt={project.title} className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={project.heroImage} alt={project.title} className="h-0 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 </div>
-                <div className="px-2 pt-4 pb-2">
+                <div className="px-2 pt-1 pb-1">
                   <div className="flex items-center justify-between">
-                    <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.cardTag}</p>
+                    <p className="text-xs sm:text-xs tracking-wide text-white/60">{project.cardTag}</p>
                     <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.year}</p>
                   </div>
-                  <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white truncate">{project.title}</h3>
-                  <p className="mt-2 text-xs text-white/60 truncate">{project.shortDesc}</p>
+                  <h3 className="mt-1 text-m sm:text-l font-semibold text-white truncate">{project.title}</h3>
+                  <p className="mt-2 text-xs sm:text-xs text-white/60 truncate">{project.shortDesc}</p>
                 </div>
               </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* 4. SECTION LOGO LOOP */}
+      {/* <section id="stack" className="w-full mt-20">
+        <div className="mx-auto max-w-[1366px] px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6">Achievements</h2>
+            <div className="flex justify-center items-center">
+              <div style={{ height: '250px', position: 'relative', overflow: 'hidden'}}>
+                <LogoLoop
+                  logos={techLogos}
+                  speed={60}
+                  direction="up"
+                  logoHeight={25}
+                  gap={30}
+                  hoverSpeed={10}
+                  scaleOnHover
+                  fadeOut
+                  fadeOutColor="#101010"
+                  ariaLabel="Technology partners"
+                />
+              </div>
+            </div>
+        </div>
+      </section> */}
 
       {/* FOOTER */}
       <footer className="w-full mt-28 mb-20 border-t border-white/10 pt-10 flex flex-col items-center justify-center gap-6">
@@ -497,7 +564,7 @@ export default function Home() {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex-none flex items-center justify-between bg-[#111111] px-5 py-4 sm:px-6 sm:py-5 border-b border-white/10 z-10">
-              <h3 className="text-xl sm:text-2xl font-semibold pr-4 truncate">{activeProject.title}</h3>
+              <h3 className="text-sm md:text-base font-semibold pr-4">{activeProject.title}</h3>
               <button
                 type="button"
                 className="flex-shrink-0 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white/80 transition hover:border-white/60 hover:text-white"
@@ -535,8 +602,9 @@ export default function Home() {
 
               <div>
                 <p className="text-sm text-white/60">Documentation</p>
-                {/* Hapus sm:grid dan sm:grid-cols-3 agar tetap flexbox */}
-                <div className="mt-3 flex overflow-x-auto gap-3 pb-4 no-scrollbar"> 
+                <div 
+                  ref={docsScrollRef}
+                  className="mt-3 flex overflow-x-auto gap-3 pb-4 no-scrollbar"                >
                   {activeProject.gallery.map((img: string, idx: number) => (
                     <img
                       key={idx}
@@ -607,6 +675,7 @@ export default function Home() {
           </div>
         </div>
       )}
+      
 
     </div>
   );
