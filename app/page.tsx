@@ -108,6 +108,31 @@ const projectsData = [
   }
 ];
 
+const researchData = [
+  {
+    id: "foodsecurity",
+    cardTag: "Streamlit",
+    year: "2025",
+    title: "Food Security Forecasting System",
+    shortDesc: "Food Security System for Sulampua's Region.",
+    period: "Jul 2025 - Sep 2025",
+    roleLabel: "Tools",
+    role: "Streamlit",
+    description: "Built a time-series forecasting model to support pension fund planning decisions.",
+    tasks: [
+      "Collaborated on building a Machine Learning based Food Security Prediction System using the Streamlit framework.",
+      "Performed Predictive Modeling on 5 variables from the National Food Agency’s Food Security Atlas, covering 127 points in the Sulampua region. Model achieved an R2 score of 0.801 and RMSE of 0.887."
+    ],
+    heroImage: "./assets/projects/foodsecurity1.png",
+    gallery: [
+      "./assets/projects/foodsecurity1.png",
+      "./assets/projects/foodsecurity2.png",
+      "./assets/projects/foodsecurity3.png"
+    ],
+    link: "https://foodsecurityforecasting.streamlit.app/"
+  },
+];
+
 export default function Home() {
   const [activeProject, setActiveProject] = useState<any>(null);
   const [lightbox, setLightbox] = useState({ isOpen: false, images: [] as string[], index: 0 });
@@ -320,7 +345,7 @@ export default function Home() {
                 key={project.id}
                 type="button"
                 onClick={() => openProjectModal(project)}
-                className="group relative text-left rounded-3xl border border-white/0 bg-[#111111] p-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/70 hover:shadow-[0_20px_60px_rgba(255,255,255,0.15)]"
+                className="group relative text-left rounded-3xl border border-white/15 bg-[#111111] p-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/70 hover:shadow-[0_20px_60px_rgba(255,255,255,0.15)]"
               >
                 <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: '0 0 80px rgba(255,255,255,0.18)' }} />
                 <div className="relative overflow-hidden rounded-2xl">
@@ -350,7 +375,37 @@ export default function Home() {
                 key={project.id}
                 type="button"
                 onClick={() => openProjectModal(project)}
-                className="group relative text-left rounded-3xl border border-white/0 bg-[#111111] p-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/70 hover:shadow-[0_20px_60px_rgba(255,255,255,0.15)]"
+                className="group relative text-left rounded-3xl border border-white/15 bg-[#111111] p-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/70 hover:shadow-[0_20px_60px_rgba(255,255,255,0.15)]"
+              >
+                <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: '0 0 80px rgba(255,255,255,0.18)' }} />
+                <div className="relative overflow-hidden rounded-2xl">
+                  <img src={project.heroImage} alt={project.title} className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                </div>
+                <div className="px-2 pt-4 pb-2">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.cardTag}</p>
+                    <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.year}</p>
+                  </div>
+                  <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white truncate">{project.title}</h3>
+                  <p className="mt-2 text-xs text-white/60 truncate">{project.shortDesc}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. SECTION RESEARCH */}
+      <section id="research" className="w-full mt-20">
+        <div className="mx-auto max-w-[1366px] px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6">Research</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {researchData.map((project) => (
+              <button
+                key={project.id}
+                type="button"
+                onClick={() => openProjectModal(project)}
+                className="group relative text-left rounded-3xl border border-white/15 bg-[#111111] p-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-white/70 hover:shadow-[0_20px_60px_rgba(255,255,255,0.15)]"
               >
                 <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ boxShadow: '0 0 80px rgba(255,255,255,0.18)' }} />
                 <div className="relative overflow-hidden rounded-2xl">
