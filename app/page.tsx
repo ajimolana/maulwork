@@ -29,13 +29,16 @@ const experiencesData = [
       "Created Machine Learning based automation to accelerate monthly Data Entry of 5,000+ entries from 52 different spreadsheets with time efficiency up to 90% (from 5 hours to 30 minutes).",
       "Participated in an internal project to develop a Farmer Planting Calendar dashboard. Performed Data Wrangling, SARIMA based Forecasting, and Data Visualization in Power BI to provide optimal planting period recommendations for farmers."
     ],
-    heroImage: "./assets/projects/internbi1.jpg",
+    heroImage: "https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778313600&v=beta&t=FzwwiULyKSARQXvcxD3wCpeqtPr3mg4E5vyL3UrzXUo",
     gallery: [
-      "./assets/projects/internbi1.jpg",
-      "./assets/projects/internbi2.jpg"
+      "https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778313600&v=beta&t=FzwwiULyKSARQXvcxD3wCpeqtPr3mg4E5vyL3UrzXUo",
+      "https://media.licdn.com/dms/image/v2/D562DAQFd8xtNMMIXWQ/profile-treasury-image-shrink_800_800/B56Z3jwnkrG0AY-/0/1777642668840?e=1778313600&v=beta&t=eyTmGNyuPpQrfsExi36rz9a-QGmn_1s7toJfPrR8ZzI",
+      "https://media.licdn.com/dms/image/v2/D562DAQGmfBLms9a98g/profile-treasury-image-shrink_800_800/B56Z3jyeiOK4AY-/0/1777643155073?e=1778313600&v=beta&t=yAv8Rw7BIYXEeWBcOfvhG0CZKwOTsY_6AD-wrMNCafM",
+      "https://media.licdn.com/dms/image/v2/D562DAQFcUbzBFBrV8Q/profile-treasury-image-shrink_800_800/B56Z3jwnktKYBM-/0/1777642667345?e=1778313600&v=beta&t=7uQD5Cact9-TFsbOr2cOsPovoU1MiXUw0UtVJc49eus",
+      "https://media.licdn.com/dms/image/v2/D562DAQEJRiUOwpL5tg/profile-treasury-image-shrink_800_800/B56Z3jyeiNHEAY-/0/1777643155060?e=1778313600&v=beta&t=Ay6_39bVJkpoCcA8wYNt9Gj_z2bUc_fkVOYqPJZAJgQ"
     ],
     link: null
-  }
+  } 
 ];
 
 const projectsData = [
@@ -63,7 +66,7 @@ const projectsData = [
   },
   {
     id: "pensionfund",
-    cardTag: "Dashboard",
+    cardTag: "Streamlit",
     year: "2025",
     title: "Pension Fund Calculator",
     shortDesc: "Count pension fund premium costs.",
@@ -85,13 +88,13 @@ const projectsData = [
   },
   {
     id: "smarthighland",
-    cardTag: "Google Colab, Looker Studio",
+    cardTag: "Colab, Looker",
     year: "2024",
     title: "Smart Highland Agriculture",
     shortDesc: "Best time for plant and crop forecaster.",
     period: "Jan 2024 - Apr 2024",
-    roleLabel: "Role",
-    role: "Data Analyst",
+    roleLabel: "Tools",
+    role: "Google Colab, Looker Studio",
     description: "Built a time-series forecasting model to support pension fund planning decisions.",
     tasks: [
       "Collaborated on an Artificial Intelligence based Highland Agriculture Parameter dashboard and identified business opportunities through predictive analysis.",
@@ -129,6 +132,7 @@ export default function Home() {
       label: "Contact", bgColor: "#2F293A", textColor: "#fff",
       links: [
         { label: "Email", ariaLabel: "Email", href: "mailto:maulanarajisf@gmail.com", openInNewTab: true },
+        { label: "GitHub", ariaLabel: "GitHub", href: "https://www.github.com/ajimolana", openInNewTab: true },
         { label: "LinkedIn", ariaLabel: "LinkedIn", href: "https://www.linkedin.com/in/maulanaraji/", openInNewTab: true },
         { label: "Instagram", ariaLabel: "Instagram", href: "https://www.instagram.com/ajimolana/", openInNewTab: true }
       ]
@@ -248,7 +252,7 @@ export default function Home() {
       
       {/* CARD NAV DENGAN LOGIKA HIDE SAAT MODAL TERBUKA */}
       <div 
-        className="transition-opacity duration-300 ease-in-out" 
+        className="md:transition-opacity md:duration-300 md:ease-in-out" 
         style={{ opacity: isOverlayOpen ? 0 : 1, pointerEvents: isOverlayOpen ? 'none' : 'auto' }}
       >
         <CardNav logo="" logoAlt="" title="Maulana's Portfolio" items={navItems} baseColor="#fff" menuColor="#fff" ease="power3.out" />
@@ -324,8 +328,8 @@ export default function Home() {
                 </div>
                 <div className="px-2 pt-4 pb-2">
                   <div className="flex items-center justify-between">
-                    <p className="text-xs sm:text-sm uppercase tracking-widest text-white/60">{project.cardTag}</p>
-                    <p className="text-xs sm:text-sm uppercase tracking-wide text-white/60">{project.year}</p>
+                    <p className="text-xs sm:text-xs uppercase tracking-widest text-white/60">{project.cardTag}</p>
+                    <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.year}</p>
                   </div>
                   <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white truncate">{project.title}</h3>
                   <p className="mt-2 text-xs text-white/60 truncate">{project.shortDesc}</p>
@@ -354,8 +358,8 @@ export default function Home() {
                 </div>
                 <div className="px-2 pt-4 pb-2">
                   <div className="flex items-center justify-between">
-                    <p className="text-xs sm:text-sm uppercase tracking-widest text-white/60">{project.cardTag}</p>
-                    <p className="text-xs sm:text-sm uppercase tracking-wide text-white/60">{project.year}</p>
+                    <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.cardTag}</p>
+                    <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.year}</p>
                   </div>
                   <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white truncate">{project.title}</h3>
                   <p className="mt-2 text-xs text-white/60 truncate">{project.shortDesc}</p>
@@ -369,18 +373,61 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="w-full mt-28 mb-20 border-t border-white/10 pt-10 flex flex-col items-center justify-center gap-6">
         <div className="flex items-center justify-center gap-6">
-          <a href="mailto:maulanarajisf@gmail.com" target="_blank" rel="noreferrer" className="text-[#dfdfdf] hover:text-white transition-colors" aria-label="Email">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <a 
+            href="mailto:maulanarajisf@gmail.com" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="transition-opacity hover:opacity-80" 
+            aria-label="Email"
+          >
+            <img 
+              src="https://img.icons8.com/?size=100&id=12623&format=png&color=888888" 
+              alt="Email Logo" 
+              className="w-7 h-7" // Ukuran 28px (w-7 = 1.75rem = 28px)
+            />
           </a>
-          <a href="https://github.com/maulanaraji" target="_blank" rel="noreferrer" className="text-[#dfdfdf] hover:text-white transition-colors" aria-label="GitHub">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <a 
+            href="https://github.com/ajimolana" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="transition-opacity hover:opacity-80" 
+            aria-label="GitHub"
+          >
+            <img 
+              src="https://img.icons8.com/?size=100&id=12599&format=png&color=888888" 
+              alt="GitHub Logo" 
+              className="w-7 h-7" // Ukuran 28px (w-7 = 1.75rem = 28px)
+            />
           </a>
-          <a href="https://www.linkedin.com/in/maulanaraji/" target="_blank" rel="noreferrer" className="text-[#dfdfdf] hover:text-white transition-colors" aria-label="LinkedIn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          <a 
+            href="https://linkedin.com/in/maulanaraji/" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="transition-opacity hover:opacity-80" 
+            aria-label="LinkedIn"
+          >
+            <img 
+              src="https://img.icons8.com/?size=100&id=8808&format=png&color=888888" 
+              alt="LinkedIn Logo" 
+              className="w-7 h-7" // Ukuran 28px (w-7 = 1.75rem = 28px)
+            />
+          </a>
+           <a 
+            href="https://instagram.com/ajimolana/" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="transition-opacity hover:opacity-80" 
+            aria-label="Instagram"
+          >
+            <img 
+              src="https://img.icons8.com/?size=100&id=32309&format=png&color=888888" 
+              alt="Instagram Logo" 
+              className="w-7 h-7" // Ukuran 28px (w-7 = 1.75rem = 28px)
+            />
           </a>
         </div>
         <p className="text-sm text-[#dfdfdf] text-center px-4">
-          &copy; 2026 Maulana Raji Shofil Fuadi. All rights reserved.
+          Copyright &copy; 2026 Maulana Raji Shofil Fuadi. All rights reserved.
         </p>
       </footer>
 
@@ -432,14 +479,16 @@ export default function Home() {
               </div>
 
               <div>
-                <p className="text-sm text-white/60">Documentation (Click to Preview)</p>
-                <div className="mt-3 flex overflow-x-auto gap-3 pb-4 sm:pb-0 sm:grid sm:grid-cols-3 sm:overflow-x-visible">
+                <p className="text-sm text-white/60">Documentation</p>
+                {/* Hapus sm:grid dan sm:grid-cols-3 agar tetap flexbox */}
+                <div className="mt-3 flex overflow-x-auto gap-3 pb-4 no-scrollbar"> 
                   {activeProject.gallery.map((img: string, idx: number) => (
                     <img
                       key={idx}
                       src={img}
                       alt={`Documentation ${idx + 1}`}
-                      className="h-40 w-64 flex-none rounded-2xl object-cover sm:w-full cursor-pointer hover:opacity-70 transition-opacity"
+                      /* Hapus sm:w-full agar gambar tidak melebar memenuhi kolom grid */
+                      className="h-40 w-64 flex-none rounded-2xl object-cover cursor-pointer hover:opacity-70 transition-opacity"
                       onClick={() => openLightbox(activeProject.gallery, idx)}
                     />
                   ))}

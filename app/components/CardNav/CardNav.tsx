@@ -2,7 +2,6 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-// use your own icon import if react-icons is not available
 import { GoArrowUpRight } from 'react-icons/go';
 import GlassSurface from '../GlassSurface/GlassSurface';
 
