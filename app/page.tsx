@@ -95,11 +95,38 @@ const renderDetails = (details: DetailItem[] = []) =>
       </div>
     ));
 
-// const techLogos = [
-//   { node: <span className="text-white font-medium">Teks 1</span>, title: "Teks 1", href: "#" },
-//   { node: <span className="text-white font-medium">Teks 2</span>, title: "Teks 2", href: "#" },
-//   { node: <span className="text-white font-medium">Teks 3</span>, title: "Teks 3", href: "#" },
-// ];
+const achievements = [
+  {
+    label: "Top 10 Paper | Aksinomi Sulampua, BI Sulsel (Oct 2025)",
+    openResearchId: "aksinomi2025",
+  },
+  {
+    label: "Top 10 Ambassador | Cinta Bangga Paham Rupiah, BI Sulsel (Jun 2025)"
+  },
+  {
+    label: "Outstanding Student in Competition | Mathematics Dept. Hasanuddin University (Aug 2024)",
+    title: "Outstanding Student in Competition | Mathematics Dept. Hasanuddin University (Aug 2023)"
+  },
+  {
+    label: "1st Place Softball Fast-Pitch Men | Airlangga National Championship (Jul 2024)"
+  },
+  {
+    label: "Outstanding Student in Competition | Mathematics Dept. Hasanuddin University (Aug 2023)"
+  },
+  {
+    label: "2nd Place Softball Fast-Pitch Men | UGM Cup (Jun 2023)"
+  },
+  {
+    label: "2nd Place Videography | National Environmental Expo (Jun 2023)"
+  },
+  {
+    label: "4th Runner-Up Infographic | Celebes Plano Fest (Nov 2023)"
+  },
+  {
+    label: "1st Place Paper | Milky Way Scientific Paper Competition (Dec 2022)",
+    openResearchId: "smartcelldrybox",
+  }
+];
 
 const experiencesData = [
   {
@@ -309,7 +336,7 @@ const researchData = [
     cardTag: "Scientific Paper Competition",
     year: "2024",
     title: "Eco Blue Village: Seaweed Biofuel Innovation",
-    shortDesc: "Top 10 Paper at Aksinomi Sulampua",
+    shortDesc: "Submission for Aksinomi Sulampua",
     period: "September 2025",
     roleLabel: "Category",
     role: "Scientific Paper Competition",
@@ -345,6 +372,7 @@ export default function Home() {
     captions: [] as string[],
     index: 0
   });
+  const [lanyardOffsetY, setLanyardOffsetY] = useState(0);
   
   // --- STATE UNTUK GYROSCOPE LANYARD ---
   const [gyroGravity, setGyroGravity] = useState<[number, number, number]>([0, -40, 0]);
@@ -352,6 +380,16 @@ export default function Home() {
 
   // --- REFERENSI & LOGIKA SCROLL DOCUMENTATION ---
   const docsScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateLanyardOffset = () => {
+      setLanyardOffsetY(window.innerWidth >= 1024 ? 0.4 : 0);
+    };
+
+    updateLanyardOffset();
+    window.addEventListener("resize", updateLanyardOffset);
+    return () => window.removeEventListener("resize", updateLanyardOffset);
+  }, []);
 
   useEffect(() => {
     const el = docsScrollRef.current;
@@ -475,11 +513,19 @@ export default function Home() {
 
   useEffect(() => {
     if (isOverlayOpen) {
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = "hidden";
+      if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`;
+      }
     } else {
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    };
   }, [isOverlayOpen]);
 
   // Keyboard navigation for lightbox (prevent arrow key scrolling)
@@ -522,6 +568,29 @@ export default function Home() {
     setLightbox((prev) => ({ ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length }));
   };
 
+  const researchById = (id?: string) => researchData.find((project) => project.id === id);
+  const techLogos = achievements.map((item) => {
+    const label = item.label;
+    const title = item.title ?? item.label;
+    const targetResearch = researchById(item.openResearchId);
+    const node = targetResearch ? (
+      <button
+        type="button"
+        onClick={() => openProjectModal(targetResearch)}
+        className="text-white font-medium whitespace-nowrap hover:opacity-80 transition-opacity"
+      >
+        {label}
+      </button>
+    ) : (
+      <span className="text-white font-medium whitespace-nowrap">{label}</span>
+    );
+
+    return {
+      node,
+      title,
+    };
+  });
+
 
   return (
     <div id="top" className="min-h-screen overflow-x-hidden bg-[#101010] relative pt-0 pb-10">
@@ -535,27 +604,27 @@ export default function Home() {
       </div>
 
       {/* HEADER SECTION */}
-      <div className="w-full relative overflow-hidden">
+      <div className="w-full relative overflow-visible">
         <div className="absolute inset-0 w-full h-full pointer-events-none">
           <div style={{ width: '100%', height: '100%', position: 'relative', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%)' }}>
             <ColorBends colors={["#19382e"]} rotation={90} speed={0.2} scale={1} frequency={1} warpStrength={1} mouseInfluence={1} noise={0.15} parallax={0.5} iterations={1} intensity={1.5} bandWidth={6} transparent autoRotate={0} />
             <DotGrid dotSize={5} gap={15} baseColor="#2F293A" activeColor="#5227FF" proximity={120} shockRadius={250} shockStrength={5} resistance={750} returnDuration={1.5} />
           </div>
         </div>
-        <div className="mx-auto max-w-[1366px] min-h-[90vh] px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0">
-            <div className="col-span-1 lg:col-span-6 h-full relative z-10 order-2 lg:order-1">
-              <div className="flex items-start lg:items-center h-full">
-                <div className="flex flex-col gap-6 -mt-28 sm:-mt-20 md:-mt-64 lg:mt-0">
+        <div className="mx-auto max-w-[1366px] min-h-screen px-4 sm:px-6">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 xl:gap-0">
+            <div className="col-span-1 xl:col-span-6 h-full relative z-10 order-2 xl:order-1">
+              <div className="flex items-start xl:items-center h-full">
+                <div className="flex flex-col gap-6 -mt-28 sm:-mt-20 md:-mt-48 lg:-mt-64 xl:mt-0">
                   <AnimatedContent distance={100} direction="vertical" reverse={false} duration={0.8} ease="power3.out" initialOpacity={0} animateOpacity scale={1} threshold={0.1} delay={0}>
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-2 sm:mt-4 md:mt-32">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-0 sm:mt-0 md:mt-14">
                       <h1 className="text-lg sm:text-2xl text-white font-bold">I'm Open to Position as a</h1>
-                      <RotatingText texts={['Data Analyst', 'Data Scientist', 'Risk Analyst', 'Management Trainee']} mainClassName="px-2 sm:px-2 md:px-3 bg-[#C6F10E] text-black overflow-hidden py-0.5 sm:py-1 justify-center rounded-lg text-lg sm:text-2xl font-bold inline-flex transition-all" staggerFrom="last" initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "-120%" }} staggerDuration={0.025} splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1" transition={{ type: "spring", damping: 30, stiffness: 400 }} rotationInterval={2000} splitBy="characters" auto loop />
+                      <RotatingText texts={['Data Analyst', 'Data Scientist', 'Risk Analyst', 'Management Trainee']} mainClassName="px-2 sm:px-2 md:px-3 bg-[#C6F10E] text-black overflow-hidden py-0.5 sm:py-1 justify-center rounded-lg text-lg sm:text-2xl font-bold inline-flex transition-all" staggerFrom="last" initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "-120%" }} staggerDuration={0.025} splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1" transition={{ type: "spring", damping: 30, stiffness: 400 }} rotationInterval={2000} animatePresenceMode="wait" animatePresenceInitial={false} splitBy="characters" auto loop />
                     </div>
                   </AnimatedContent>
                   <div className="flex flex-col items-start gap-4">
-                    <SplitText text="I'm Maulana Raji Shofil Fuadi" className="text-3xl sm:text-4xl md:text-6xl font-semibold text-start whitespace-normal md:whitespace-nowrap" textAlign="left" delay={50} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
-                    <SplitText text="Actuarial Science Graduate" className="text-2xl sm:text-3xl md:text-5xl font-semibold text-start text-[#C6F10E]" textAlign="left" delay={75} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
+                    <SplitText text="I'm Maulana Raji Shofil Fuadi" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold text-start whitespace-normal lg:whitespace-nowrap" textAlign="left" delay={50} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
+                    <SplitText text="Actuarial Science Graduate" className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold text-start text-[#C6F10E]" textAlign="left" delay={75} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
                   </div>
                   <div className="flex flex-col items-start">
                     <BlurText text="Actuarial Science graduate specializing in data analytics and machine learning. Gained practical experience as an intern at Bank Indonesia South Sulawesi, with an innovation through data entry automation. Proficient in forecasting and data visualization. Certified Data Analyst by BNSP and in Data Science by Startup Campus. Possesses strong public speaking, leadership, and problem solving skills, backed by a record of achievements. Eager to continuously learn." delay={20} animateBy="words" direction="top" className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-xl sm:max-w-2xl md:max-w-7xl" />
@@ -563,8 +632,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="col-span-1 lg:col-span-6 relative z-0 overflow-visible order-1 lg:order-2 -mt-48 sm:-mt-24 md:-mt-40 lg:-mt-10">
-              <div className="relative w-[260%] -ml-[80%] sm:w-[150%] sm:-ml-[25%] lg:w-[400%] lg:-ml-[130%] flex items-center justify-center">
+            <div className="col-span-1 xl:col-span-6 relative z-0 overflow-visible order-1 xl:order-2 -mt-56 sm:-mt-64 md:-mt-80 lg:-mt-10 xl:-mt-0">
+              {/* Setting untuk Ukuran Lanyard */}
+              <div className="relative w-[280%] -ml-[90%] sm:w-[300%] sm:-ml-[100%] md:w-[350%] md:-ml-[125%] lg:w-[350%] lg:-ml-[125%] xl:w-[400%] xl:-ml-[130%] 2xl:w-[450%] 2xl:-ml-[150%] flex items-center justify-center">
                 
                 {/* TOMBOL REQUEST GYRO (HANYA MUNCUL DI iOS 13+) */}
                 {showGyroPermission && (
@@ -578,7 +648,7 @@ export default function Home() {
                 )}
 
                 {/* GRAVITASI LANYARD SUDAH DINAMIS */}
-                <Lanyard position={[0, 0, 15]} gravity={gyroGravity} />
+                <Lanyard position={[0, 0, 15]} gravity={gyroGravity} lanyardOffsetY={lanyardOffsetY} />
 
               </div>
             </div>
@@ -607,7 +677,7 @@ export default function Home() {
                     <p className="text-xs sm:text-xs uppercase tracking-widest text-white/60">{project.cardTag}</p>
                     <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.year}</p>
                   </div>
-                  <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white truncate">{project.title}</h3>
+                  <h3 className="mt-1 text-lg sm:text-xl md:text-xl lg:text-xl font-semibold text-white truncate">{project.title}</h3>
                   <p className="mt-2 text-xs text-white/60 truncate">{project.shortDesc}</p>
                 </div>
               </button>
@@ -637,7 +707,7 @@ export default function Home() {
                     <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.cardTag}</p>
                     <p className="text-xs sm:text-xs uppercase tracking-wide text-white/60">{project.year}</p>
                   </div>
-                  <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white truncate">{project.title}</h3>
+                  <h3 className="mt-1 text-lg sm:text-xl md:text-xl lg:text-xl font-semibold text-white truncate">{project.title}</h3>
                   <p className="mt-2 text-xs text-white/60 truncate">{project.shortDesc}</p>
                 </div>
               </button>
@@ -688,11 +758,11 @@ export default function Home() {
                   direction="up"
                   logoHeight={25}
                   gap={30}
-                  hoverSpeed={10}
+                  hoverSpeed={60}
                   scaleOnHover
                   fadeOut
                   fadeOutColor="#101010"
-                  ariaLabel="Technology partners"
+                  ariaLabel="Achievements"
                 />
               </div>
             </div>

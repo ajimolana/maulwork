@@ -234,7 +234,7 @@ const CardNav: React.FC<CardNavProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`card-nav-container fixed left-1/2 -translate-x-1/2 z-[99] bottom-4 md:bottom-auto md:top-[2em] will-change-[width] ${className}`}
+      className={`card-nav-container fixed left-1/2 -translate-x-1/2 z-[99] bottom-4 lg:bottom-auto lg:top-[2em] will-change-[width] ${className}`}
       style={containerWidth ? { width: `${containerWidth}px` } : undefined}
     >
       <nav
@@ -256,7 +256,7 @@ const CardNav: React.FC<CardNavProps> = ({
                 type="button"
                 onClick={toggleMenu}
                 aria-label={isExpanded ? 'Close menu' : 'Open menu'}
-                className="logo px-3 md:px-4 text-[13px] md:text-[14px] font-semibold tracking-[-0.02em] text-white whitespace-nowrap cursor-pointer text-center"
+                className="logo px-3 text-[13px] font-semibold tracking-[-0.02em] text-white whitespace-nowrap cursor-pointer text-center"
                 ref={titleRef}
               >
                 {title}
