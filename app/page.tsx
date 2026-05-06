@@ -329,7 +329,12 @@ const researchData = [
     ],
     heroImage: "",
     gallery: [],
-    link: ""
+    links: [
+      {
+        label: "Open Notebook",
+        href: "#foodsecurity"
+      },
+    ]
   },
   {
     id: "aksinomi2024",
@@ -378,6 +383,12 @@ export default function Home() {
   const [gyroGravity, setGyroGravity] = useState<[number, number, number]>([0, -40, 0]);
   const [showGyroPermission, setShowGyroPermission] = useState(false);
 
+  const [pageReady, setPageReady] = useState(false);
+
+  useEffect(() => {
+    setPageReady(true);
+  }, []);
+  
   // --- REFERENSI & LOGIKA SCROLL DOCUMENTATION ---
   const docsScrollRef = useRef<HTMLDivElement>(null);
 
@@ -412,8 +423,9 @@ export default function Home() {
     {
       label: "About", bgColor: "#1B1722", textColor: "#fff",
       links: [
-        { label: "Profile", ariaLabel: "About Profile", href: "#top" },
+        { label: "Profile", ariaLabel: "About Profile", href: "#profile" },
         { label: "Experiences", ariaLabel: "About Experiences", href: "#experiences" },
+        { label: "Contacts", ariaLabel: "About Contacts", href: "#contacts" },
       ]
     },
     {
@@ -423,15 +435,6 @@ export default function Home() {
         { label: "Research", ariaLabel: "Projects Research", href: "#research" },
       ]
     },
-    {
-      label: "Contact", bgColor: "#2F293A", textColor: "#fff",
-      links: [
-        { label: "Email", ariaLabel: "Email", href: "mailto:maulanarajisf@gmail.com", openInNewTab: true },
-        { label: "GitHub", ariaLabel: "GitHub", href: "https://www.github.com/ajimolana", openInNewTab: true },
-        { label: "LinkedIn", ariaLabel: "LinkedIn", href: "https://www.linkedin.com/in/maulanaraji/", openInNewTab: true },
-        { label: "Instagram", ariaLabel: "Instagram", href: "https://www.instagram.com/ajimolana/", openInNewTab: true }
-      ]
-    }
   ];
 
   // 1. LOGIKA HISTORY BROWSER
@@ -593,7 +596,7 @@ export default function Home() {
 
 
   return (
-    <div id="top" className="min-h-screen overflow-x-hidden bg-[#101010] relative pt-0 pb-10">
+    <div id="profile" className="min-h-screen overflow-x-hidden bg-[#101010] relative pt-0 pb-10">
       
       {/* CARD NAV DENGAN LOGIKA HIDE SAAT MODAL TERBUKA */}
       <div 
@@ -615,7 +618,7 @@ export default function Home() {
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 xl:gap-0">
             <div className="col-span-1 xl:col-span-6 h-full relative z-10 order-2 xl:order-1">
               <div className="flex items-start xl:items-center h-full">
-                <div className="flex flex-col gap-6 -mt-28 sm:-mt-20 md:-mt-48 lg:-mt-64 xl:mt-0">
+                <div className={`flex flex-col gap-6 -mt-28 sm:-mt-20 md:-mt-48 lg:-mt-64 xl:mt-0 transition-opacity duration-300 ${!pageReady ? 'opacity-0 invisible' : 'opacity-100 visible'}`}>
                   <AnimatedContent distance={100} direction="vertical" reverse={false} duration={0.8} ease="power3.out" initialOpacity={0} animateOpacity scale={1} threshold={0.1} delay={0}>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-0 sm:mt-0 md:mt-14">
                       <h1 className="text-lg sm:text-2xl text-white font-bold">I'm Open to Position as a</h1>
@@ -623,8 +626,8 @@ export default function Home() {
                     </div>
                   </AnimatedContent>
                   <div className="flex flex-col items-start gap-4">
-                    <SplitText text="I'm Maulana Raji Shofil Fuadi" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold text-start whitespace-normal lg:whitespace-nowrap" textAlign="left" delay={50} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
-                    <SplitText text="Actuarial Science Graduate" className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold text-start text-[#C6F10E]" textAlign="left" delay={75} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
+                    <SplitText text="I'm Maulana Raji Shofil Fuadi" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-semibold text-start whitespace-normal lg:whitespace-nowrap" textAlign="left" delay={50} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.1} rootMargin="-0px" />
+                    <SplitText text="Actuarial Science Graduate" className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold text-start text-[#C6F10E]" textAlign="left" delay={75} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.1} rootMargin="-0px" />
                   </div>
                   <div className="flex flex-col items-start">
                     <BlurText text="Actuarial Science graduate specializing in data analytics and machine learning. Gained practical experience as an intern at Bank Indonesia South Sulawesi, with an innovation through data entry automation. Proficient in forecasting and data visualization. Certified Data Analyst by BNSP and in Data Science by Startup Campus. Possesses strong public speaking, leadership, and problem solving skills, backed by a record of achievements. Eager to continuously learn." delay={20} animateBy="words" direction="top" className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-xl sm:max-w-2xl md:max-w-7xl" />
@@ -770,7 +773,7 @@ export default function Home() {
       </section> */}
 
       {/* FOOTER */}
-      <footer className="w-full mt-28 mb-20 border-t border-white/10 pt-10 flex flex-col items-center justify-center gap-6">
+      <footer id="contacts" className="w-full mt-28 mb-20 border-t border-white/10 pt-10 flex flex-col items-center justify-center gap-6">
         <div className="flex items-center justify-center gap-6">
           <a 
             href="mailto:maulanarajisf@gmail.com" 

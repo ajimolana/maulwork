@@ -66,6 +66,7 @@ const CardNav: React.FC<CardNavProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [containerWidth, setContainerWidth] = useState<number | null>(null);
+  const [isReady, setIsReady] = useState(false);
   const collapsedWidthRef = useRef<number>(180); // Diperkecil dari 280
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -73,7 +74,7 @@ const CardNav: React.FC<CardNavProps> = ({
   const cardsRef = useRef<HTMLDivElement[]>([]);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
 
-  const getExpandedWidth = () => Math.min(window.innerWidth * 0.9, 800);
+  const getExpandedWidth = () => Math.min(window.innerWidth * 0.9, 400); // Ini untuk lebar cardnya waktu diexpand
 
   const measureCollapsedWidth = () => {
     const titleWidth = titleRef.current?.getBoundingClientRect().width || 0;
@@ -83,7 +84,7 @@ const CardNav: React.FC<CardNavProps> = ({
 
   const calculateHeight = () => {
     const navEl = navRef.current;
-    if (!navEl) return 260;
+    if (!navEl) return 200; // ini untuk ubah height expand
 
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     if (isMobile) {
@@ -101,7 +102,7 @@ const CardNav: React.FC<CardNavProps> = ({
 
         contentEl.offsetHeight;
 
-        const topBar = 50; // Tinggi navbar tertutup (diperkecil dari 60)
+        const topBar = 10; // Ini untuk atur jarak Sub-Header dan Label
         const padding = 16;
         const contentHeight = contentEl.scrollHeight;
 
@@ -113,7 +114,7 @@ const CardNav: React.FC<CardNavProps> = ({
         return topBar + contentHeight + padding;
       }
     }
-    return 260;
+    return 200; // ini untuk ubah height expand
   };
 
   const createTimeline = () => {
@@ -156,6 +157,8 @@ const CardNav: React.FC<CardNavProps> = ({
     const tl = createTimeline();
     tlRef.current = tl;
 
+    setIsReady(true);
+    
     return () => {
       tl?.kill();
       tlRef.current = null;
@@ -234,7 +237,7 @@ const CardNav: React.FC<CardNavProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`card-nav-container fixed left-1/2 -translate-x-1/2 z-[99] bottom-4 lg:bottom-auto lg:top-[2em] will-change-[width] ${className}`}
+      className={`card-nav-container fixed left-1/2 -translate-x-1/2 z-[99] bottom-4 lg:bottom-auto lg:top-[2em] will-change-[width] ${className} ${!isReady ? 'invisible' : 'visible'}`}
       style={containerWidth ? { width: `${containerWidth}px` } : undefined}
     >
       <nav
