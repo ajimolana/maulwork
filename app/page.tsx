@@ -16,11 +16,90 @@ import LogoLoop from "./components/LogoLoop/LogoLoop";
 
 // --- PISAHAN DATA ---
 
-const techLogos = [
-  { node: <span className="text-white font-medium">Teks 1</span>, title: "Teks 1", href: "#" },
-  { node: <span className="text-white font-medium">Teks 2</span>, title: "Teks 2", href: "#" },
-  { node: <span className="text-white font-medium">Teks 3</span>, title: "Teks 3", href: "#" },
-];
+type DetailItem = {
+  label: string;
+  value?: string | string[];
+  list?: boolean;
+};
+
+type ProjectLink = {
+  label: string;
+  href: string;
+};
+
+type GalleryItem = string | [string, string];
+
+type Project = {
+  id: string;
+  cardTag: string;
+  year: string;
+  title: string;
+  shortDesc: string;
+  period?: string;
+  roleLabel?: string;
+  role?: string;
+  details?: DetailItem[];
+  heroImage?: string;
+  gallery?: GalleryItem[];
+  link?: string | null;
+  links?: ProjectLink[];
+  ctaLabel?: string;
+};
+
+const galleryItems = (gallery: GalleryItem[] = []) =>
+  gallery
+    .map((item) => {
+      if (typeof item === "string") {
+        return { src: item, caption: "" };
+      }
+      const [src, caption] = item;
+      return { src, caption: caption ?? "" };
+    })
+    .filter((item) => item.src && item.src.trim().length > 0);
+
+const renderMultilineText = (text: string | string[]) =>
+  Array.isArray(text)
+    ? text.map((line: string, index: number) => (
+        <span key={index}>
+          {line}
+          {index < text.length - 1 && <br />}
+        </span>
+      ))
+    : text;
+
+const renderDetails = (details: DetailItem[] = []) =>
+  details
+    .filter((item) => {
+      if (item.list && Array.isArray(item.value)) {
+        return item.value.some((entry) => entry.trim().length > 0);
+      }
+      if (Array.isArray(item.value)) {
+        return item.value.some((entry) => entry.trim().length > 0);
+      }
+      return typeof item.value === "string" && item.value.trim().length > 0;
+    })
+    .map((item, index) => (
+      <div key={`${item.label}-${index}`}>
+        <p className="text-sm text-white/60">{item.label}</p>
+        {item.list && Array.isArray(item.value) ? (
+          <ul className="mt-2 space-y-1 text-base text-white/80 list-disc list-outside ml-5">
+            {item.value
+              .filter((entry) => entry.trim().length > 0)
+              .map((entry, entryIndex) => (
+                <li key={entryIndex}>{entry}</li>
+              ))}
+          </ul>
+        ) : (
+          <p className="text-base text-white/80">{renderMultilineText(item.value ?? "")}</p>
+        )}
+      </div>
+    ));
+
+// const techLogos = [
+//   { node: <span className="text-white font-medium">Teks 1</span>, title: "Teks 1", href: "#" },
+//   { node: <span className="text-white font-medium">Teks 2</span>, title: "Teks 2", href: "#" },
+//   { node: <span className="text-white font-medium">Teks 3</span>, title: "Teks 3", href: "#" },
+// ];
 
 const experiencesData = [
   {
@@ -30,20 +109,30 @@ const experiencesData = [
     title: "Bank Indonesia South Sulawesi",
     shortDesc: "Data Entry Automation and Forecasting support",
     period: "22 Apr 2025 - 1 Aug 2025",
-    roleLabel: "Role",
-    role: "Data Analyst",
-    description: "Built a time-series forecasting model to support pension fund planning decisions.",
-    tasks: [
-      "Created Machine Learning based automation to accelerate monthly Data Entry of 5,000+ entries from 52 different spreadsheets with time efficiency up to 90% (from 5 hours to 30 minutes).",
-      "Participated in an internal project to develop a Farmer Planting Calendar dashboard. Performed Data Wrangling, SARIMA based Forecasting, and Data Visualization in Power BI to provide optimal planting period recommendations for farmers."
+    roleLabel: "Job Type",
+    role: "Internship",
+    details: [
+      {
+        label: "Position",
+        value: "Data and Statistics Function of Economic and Finance"
+      },
+      {
+        label: "Task",
+        value: [
+          "Managed monthly food price and balance sheet updates across multiple web portals.",
+          "Developed an automation tool using Fuzzy Matching with Levenshtein Distance algorithm to accelerate monthly Data Entry of 5,000+ entries from 52 different spreadsheets with time efficiency up to 90% (from 5 hours to 30 minutes).",
+          "Participated in an internal project to develop a Farmer Planting Calendar dashboard. Performed Data Wrangling, SARIMA based Forecasting, and Data Visualization in Power BI to provide optimal planting period recommendations for farmers."
+        ],
+        list: true
+      }
     ],
     heroImage: "https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778313600&v=beta&t=FzwwiULyKSARQXvcxD3wCpeqtPr3mg4E5vyL3UrzXUo",
     gallery: [
-      "https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778313600&v=beta&t=FzwwiULyKSARQXvcxD3wCpeqtPr3mg4E5vyL3UrzXUo",
-      "https://media.licdn.com/dms/image/v2/D562DAQFd8xtNMMIXWQ/profile-treasury-image-shrink_800_800/B56Z3jwnkrG0AY-/0/1777642668840?e=1778313600&v=beta&t=eyTmGNyuPpQrfsExi36rz9a-QGmn_1s7toJfPrR8ZzI",
-      "https://media.licdn.com/dms/image/v2/D562DAQGmfBLms9a98g/profile-treasury-image-shrink_800_800/B56Z3jyeiOK4AY-/0/1777643155073?e=1778313600&v=beta&t=yAv8Rw7BIYXEeWBcOfvhG0CZKwOTsY_6AD-wrMNCafM",
-      "https://media.licdn.com/dms/image/v2/D562DAQFcUbzBFBrV8Q/profile-treasury-image-shrink_800_800/B56Z3jwnktKYBM-/0/1777642667345?e=1778313600&v=beta&t=7uQD5Cact9-TFsbOr2cOsPovoU1MiXUw0UtVJc49eus",
-      "https://media.licdn.com/dms/image/v2/D562DAQEJRiUOwpL5tg/profile-treasury-image-shrink_800_800/B56Z3jyeiNHEAY-/0/1777643155060?e=1778313600&v=beta&t=Ay6_39bVJkpoCcA8wYNt9Gj_z2bUc_fkVOYqPJZAJgQ"
+      ["https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778313600&v=beta&t=FzwwiULyKSARQXvcxD3wCpeqtPr3mg4E5vyL3UrzXUo","Capstone Presentation"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQFd8xtNMMIXWQ/profile-treasury-image-shrink_800_800/B56Z3jwnkrG0AY-/0/1777642668840?e=1778313600&v=beta&t=eyTmGNyuPpQrfsExi36rz9a-QGmn_1s7toJfPrR8ZzI","Onboarding"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQGmfBLms9a98g/profile-treasury-image-shrink_800_800/B56Z3jyeiOK4AY-/0/1777643155073?e=1778313600&v=beta&t=yAv8Rw7BIYXEeWBcOfvhG0CZKwOTsY_6AD-wrMNCafM","Mentors and Partner"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQFcUbzBFBrV8Q/profile-treasury-image-shrink_800_800/B56Z3jwnktKYBM-/0/1777642667345?e=1778313600&v=beta&t=7uQD5Cact9-TFsbOr2cOsPovoU1MiXUw0UtVJc49eus","3rd Floor Fellows"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQEJRiUOwpL5tg/profile-treasury-image-shrink_800_800/B56Z3jyeiNHEAY-/0/1777643155060?e=1778313600&v=beta&t=Ay6_39bVJkpoCcA8wYNt9Gj_z2bUc_fkVOYqPJZAJgQ","Internal Project Fellows"]
     ],
     link: null
   } 
@@ -59,10 +148,19 @@ const projectsData = [
     period: "Jul 2025 - Sep 2025",
     roleLabel: "Tools",
     role: "Streamlit",
-    description: "Built a time-series forecasting model to support pension fund planning decisions.",
-    tasks: [
-      "Collaborated on building a Machine Learning based Food Security Prediction System using the Streamlit framework.",
-      "Performed Predictive Modeling on 5 variables from the National Food Agency’s Food Security Atlas, covering 127 points in the Sulampua region. Model achieved an R2 score of 0.801 and RMSE of 0.887."
+    details: [
+      {
+        label: "Description",
+        value: "Built a time-series forecasting model to support pension fund planning decisions."
+      },
+      {
+        label: "Task",
+        value: [
+          "Collaborated on building a Machine Learning based Food Security Prediction System using the Streamlit framework.",
+          "Performed Predictive Modeling on 5 variables from the National Food Agency’s Food Security Atlas, covering 127 points in the Sulampua region. Model achieved an R2 score of 0.801 and RMSE of 0.887."
+        ],
+        list: true
+      }
     ],
     heroImage: "./assets/projects/foodsecurity1.png",
     gallery: [
@@ -81,10 +179,19 @@ const projectsData = [
     period: "Oct 2025 - Jan 2026",
     roleLabel: "Tools",
     role: "Streamlit",
-    description: "Built a time-series forecasting model to support pension fund planning decisions.",
-    tasks: [
-      "Built a Pension Fund Calculator using the Streamlit framework. Useful for calculating participant premiums, featuring simulation parameters adjustable to user conditions.",
-      "Implemented Entry Age Normal, Attained Age Normal, and Projected Unit Credit formulas into a digital platform for transparent and accessible calculations."
+    details: [
+      {
+        label: "Description",
+        value: "Built a time-series forecasting model to support pension fund planning decisions."
+      },
+      {
+        label: "Task",
+        value: [
+          "Built a Pension Fund Calculator using the Streamlit framework. Useful for calculating participant premiums, featuring simulation parameters adjustable to user conditions.",
+          "Implemented Entry Age Normal, Attained Age Normal, and Projected Unit Credit formulas into a digital platform for transparent and accessible calculations."
+        ],
+        list: true
+      }
     ],
     heroImage: "./assets/projects/pensionfund1.png",
     gallery: [
@@ -103,16 +210,34 @@ const projectsData = [
     period: "Jan 2024 - Apr 2024",
     roleLabel: "Tools",
     role: "Google Colab, Looker Studio",
-    description: "Built a time-series forecasting model to support pension fund planning decisions.",
-    tasks: [
-      "Collaborated on an Artificial Intelligence based Highland Agriculture Parameter dashboard and identified business opportunities through predictive analysis.",
-      "Managed Data Pipelines and performed Hyperparameter Tuning to optimize model performance across various environmental parameters."
+    details: [
+      {
+        label: "Description",
+        value: "Built a time-series forecasting model to support pension fund planning decisions."
+      },
+      {
+        label: "Task",
+        value: [
+          "Collaborated on an Artificial Intelligence based Highland Agriculture Parameter dashboard and identified business opportunities through predictive analysis.",
+          "Managed Data Pipelines and performed Hyperparameter Tuning to optimize model performance across various environmental parameters."
+        ],
+        list: true
+      }
     ],
     heroImage: "./assets/projects/smarthighland1.png",
     gallery: [
       "./assets/projects/smarthighland1.png"
     ],
-    link: "https://bit.ly/DashboardDigdaya"
+    links: [
+      {
+        label: "Open Notebook",
+        href: "https://bit.ly/NotebookDigdaya"
+      },
+      {
+        label: "Open Dashboard",
+        href: "https://bit.ly/DashboardDigdaya"
+      }
+    ]
   }
 ];
 
@@ -123,17 +248,29 @@ const researchData = [
     year: "2022",
     title: "Smart Cell Dry Box: Practical Seaweed Processing",
     shortDesc: "Winning Paper at Milky Way Scientific Paper Competition",
-    period: "July 2022",
-    roleLabel: "Role",
-    role: "Project Lead",
-    description: "Smart Cell Dry Box: Pengolahan Praktis Rumput Laut di Desa Laikang, Kabupaten Takalar, Sulawesi Selatan",
-    tasks: [
-      "-",
+    period: "Aug 2024 - Oct 2024",
+    roleLabel: "Category",
+    role: "Scientific Paper Competition",
+    details: [
+      {
+        label: "Full Title",
+        value: "Smart Cell Dry Box: Pengolahan Praktis Rumput Laut di Desa Laikang, Kabupaten Takalar, Sulawesi Selatan"
+      },
+      {
+        label: "Recognition",
+        value: "Winner of Milky Way Scientific Paper Competition by Universitas Jember."
+      },
+      {
+        label: "Description",
+        value: "An innovation"
+      },
+      {
+        label: "Task",
+        value: "Doing research"
+      }
     ],
     heroImage: "",
-    gallery: [
-      ""
-    ],
+    gallery: [],
     link: ""
   },
   {
@@ -143,23 +280,71 @@ const researchData = [
     title: "SIPEKAN: Food Security Prediction System",
     shortDesc: "Top 10 Paper at Aksinomi Sulampua",
     period: "October 2025",
-    roleLabel: "Role",
-    role: "Project Lead",
-    description: "SIPEKAN: Sistem Prediksi Ketahanan Pangan berbasis Machine Learning sebagai Supporting Model Perumusan Kebijakan",
-    tasks: [
-      "-",
+    roleLabel: "Category",
+    role: "Scientific Paper Competition",
+    details: [
+      {
+        label: "Full Title",
+        value: "SIPEKAN: Sistem Prediksi Ketahanan Pangan berbasis Machine Learning sebagai Supporting Model Perumusan Kebijakan"
+      },
+      {
+        label: "Recognition",
+        value: "Top 10 Paper at Aksinomi Sulampua 2025, Professional Category"
+      },
+      {
+        label: "Description",
+        value: "An innovation."
+      },
+      {
+        label: "Task",
+        value: "Doing research"
+      }
     ],
     heroImage: "",
-    gallery: [
-      ""
+    gallery: [],
+    link: ""
+  },
+  {
+    id: "aksinomi2024",
+    cardTag: "Scientific Paper Competition",
+    year: "2024",
+    title: "Eco Blue Village: Seaweed Biofuel Innovation",
+    shortDesc: "Top 10 Paper at Aksinomi Sulampua",
+    period: "September 2025",
+    roleLabel: "Category",
+    role: "Scientific Paper Competition",
+    details: [
+      {
+        label: "Full Title",
+        value: "Eco Blue Village: Modifikasi Olahan Rumput Laut Menjadi Biofuel sebagai Katalisator Perekonomian Takalar melalui Penguatan BumDes Sokong Indonesia Emas 2045"
+      },
+      {
+        label: "Recognition",
+        value: "Submission for Aksinomi Sulampua 2024, Undergraduate Category"
+      },
+      {
+        label: "Description",
+        value: "An innovation."
+      },
+      {
+        label: "Task",
+        value: "Doing research"
+      }
     ],
+    heroImage: "",
+    gallery: [],
     link: ""
   },
 ];
 
 export default function Home() {
-  const [activeProject, setActiveProject] = useState<any>(null);
-  const [lightbox, setLightbox] = useState({ isOpen: false, images: [] as string[], index: 0 });
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [lightbox, setLightbox] = useState({
+    isOpen: false,
+    images: [] as string[],
+    captions: [] as string[],
+    index: 0
+  });
   
   // --- STATE UNTUK GYROSCOPE LANYARD ---
   const [gyroGravity, setGyroGravity] = useState<[number, number, number]>([0, -40, 0]);
@@ -189,13 +374,16 @@ export default function Home() {
     {
       label: "About", bgColor: "#1B1722", textColor: "#fff",
       links: [
-        { label: "Profile", ariaLabel: "About Profile", href: "#profile" },
+        { label: "Profile", ariaLabel: "About Profile", href: "#top" },
         { label: "Experiences", ariaLabel: "About Experiences", href: "#experiences" },
       ]
     },
     {
       label: "Projects", bgColor: "#2F293A", textColor: "#fff",
-      links: [{ label: "Projects", ariaLabel: "Projects Projects", href: "#projects" }]
+      links: [
+        { label: "Projects", ariaLabel: "Projects Projects", href: "#projects" },
+        { label: "Research", ariaLabel: "Projects Research", href: "#research" },
+      ]
     },
     {
       label: "Contact", bgColor: "#2F293A", textColor: "#fff",
@@ -294,6 +482,24 @@ export default function Home() {
     return () => { document.body.style.overflow = ""; };
   }, [isOverlayOpen]);
 
+  // Keyboard navigation for lightbox (prevent arrow key scrolling)
+  useEffect(() => {
+    if (!lightbox.isOpen) return;
+
+    const handleLightboxKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setLightbox((prev) => ({ ...prev, index: (prev.index + 1) % prev.images.length }));
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setLightbox((prev) => ({ ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length }));
+      }
+    };
+
+    window.addEventListener("keydown", handleLightboxKey);
+    return () => window.removeEventListener("keydown", handleLightboxKey);
+  }, [lightbox.isOpen]);
+
   // CONTROLLERS MODAL & LIGHTBOX
   const openProjectModal = (project: any) => {
     window.history.pushState({ modalOpen: true }, "");
@@ -301,9 +507,9 @@ export default function Home() {
   };
   const closeProjectModal = () => window.history.back();
 
-  const openLightbox = (images: string[], index: number) => {
+  const openLightbox = (images: string[], captions: string[], index: number) => {
     window.history.pushState({ lightboxOpen: true }, "");
-    setLightbox({ isOpen: true, images, index });
+    setLightbox({ isOpen: true, images, captions, index });
   };
   const closeLightbox = () => window.history.back();
 
@@ -316,8 +522,9 @@ export default function Home() {
     setLightbox((prev) => ({ ...prev, index: (prev.index - 1 + prev.images.length) % prev.images.length }));
   };
 
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#101010] relative pt-0 pb-10">
+    <div id="top" className="min-h-screen overflow-x-hidden bg-[#101010] relative pt-0 pb-10">
       
       {/* CARD NAV DENGAN LOGIKA HIDE SAAT MODAL TERBUKA */}
       <div 
@@ -351,7 +558,7 @@ export default function Home() {
                     <SplitText text="Actuarial Science Graduate" className="text-2xl sm:text-3xl md:text-5xl font-semibold text-start text-[#C6F10E]" textAlign="left" delay={75} from={{ opacity: 0, transform: 'translate3d(0,50px,0)' }} to={{ opacity: 1, transform: 'translate3d(0,0,0)' }} threshold={0.2} rootMargin="-50px" />
                   </div>
                   <div className="flex flex-col items-start">
-                    <BlurText text="Interested in data and machine learning. Experienced intern at Bank Indonesia with a proven track record of driving efficiency through data entry automation. Skilled in forecasting, data analysis, and visualization. Certified Data Analyst by BNSP and Data Science by Startup Campus. Possesses strong public speaking and leadership skills with a history of various achievements. Highly reliable in agile environments, adaptive, and dedicated to collaborative teamwork." delay={20} animateBy="words" direction="top" className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-xl sm:max-w-2xl md:max-w-7xl" />
+                    <BlurText text="Actuarial Science graduate specializing in data analytics and machine learning. Gained practical experience as an intern at Bank Indonesia South Sulawesi, with an innovation through data entry automation. Proficient in forecasting and data visualization. Certified Data Analyst by BNSP and in Data Science by Startup Campus. Possesses strong public speaking, leadership, and problem solving skills, backed by a record of achievements. Eager to continuously learn." delay={20} animateBy="words" direction="top" className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-xl sm:max-w-2xl md:max-w-7xl" />
                   </div>
                 </div>
               </div>
@@ -575,50 +782,73 @@ export default function Home() {
             </div>
 
             <div className="flex-1 overflow-y-auto px-5 py-6 sm:px-6 sm:py-6 space-y-6">
-              <div className="grid gap-4 sm:grid-cols-2">
+              {(activeProject.period || (activeProject.roleLabel && activeProject.role)) && (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {activeProject.period && (
+                    <div>
+                      <p className="text-sm text-white/60">Period</p>
+                      <p className="text-base text-white">{activeProject.period}</p>
+                    </div>
+                  )}
+                  {activeProject.roleLabel && activeProject.role && (
+                    <div>
+                      <p className="text-sm text-white/60">{activeProject.roleLabel}</p>
+                      <p className="text-base text-white">{activeProject.role}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {renderDetails(activeProject.details)}
+
+              {galleryItems(activeProject.gallery).length > 0 && (
                 <div>
-                  <p className="text-sm text-white/60">Period / Date</p>
-                  <p className="text-base text-white">{activeProject.period}</p>
+                  <p className="text-sm text-white/60">Documentation</p>
+                  <div
+                    ref={docsScrollRef}
+                    className="mt-3 flex overflow-x-auto gap-3 pb-4 no-scrollbar"
+                  >
+                    {galleryItems(activeProject.gallery).map((item, idx: number) => (
+                      <div key={item.src + idx} className="flex-none">
+                        <img
+                          src={item.src}
+                          alt={`Documentation ${idx + 1}`}
+                          className="h-40 w-64 rounded-2xl object-cover cursor-pointer hover:opacity-70 transition-opacity"
+                          onClick={() =>
+                            openLightbox(
+                              galleryItems(activeProject.gallery).map((img) => img.src),
+                              galleryItems(activeProject.gallery).map((img) => img.caption ?? ""),
+                              idx
+                            )
+                          }
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              )}
+
+              {Array.isArray(activeProject.links) && activeProject.links.length > 0 && (
                 <div>
-                  <p className="text-sm text-white/60">{activeProject.roleLabel}</p>
-                  <p className="text-base text-white">{activeProject.role}</p>
+                  <p className="mb-2 text-sm text-white/60">Link</p>
+                  <div className="flex flex-wrap gap-2">
+                    {activeProject.links.map((item: { label: string; href: string }, index: number) => (
+                      <Link
+                        key={`${item.href}-${index}`}
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm text-white transition hover:border-white hover:bg-white hover:text-black"
+                      >
+                        {item.label}
+                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div>
-                <p className="text-sm text-white/60">Description</p>
-                <p className="text-base text-white/80">{activeProject.description}</p>
-              </div>
-
-              <div>
-                <p className="text-sm text-white/60">Task</p>
-                <ul className="mt-2 space-y-1 text-base text-white/80 list-disc list-outside ml-5">
-                  {activeProject.tasks.map((task: string, idx: number) => (
-                    <li key={idx}>{task}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <p className="text-sm text-white/60">Documentation</p>
-                <div 
-                  ref={docsScrollRef}
-                  className="mt-3 flex overflow-x-auto gap-3 pb-4 no-scrollbar"                >
-                  {activeProject.gallery.map((img: string, idx: number) => (
-                    <img
-                      key={idx}
-                      src={img}
-                      alt={`Documentation ${idx + 1}`}
-                      /* Hapus sm:w-full agar gambar tidak melebar memenuhi kolom grid */
-                      className="h-40 w-64 flex-none rounded-2xl object-cover cursor-pointer hover:opacity-70 transition-opacity"
-                      onClick={() => openLightbox(activeProject.gallery, idx)}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {activeProject.link && (
+              {!activeProject.links && activeProject.link && (
                 <div>
                   <p className="mb-2 text-sm text-white/60">Link</p>
                   <Link
@@ -627,7 +857,7 @@ export default function Home() {
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-sm text-white transition hover:border-white hover:bg-white hover:text-black"
                   >
-                    Open Project
+                    {activeProject.ctaLabel ?? "Open Project"}
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7" /><path d="M7 7h10v10" /></svg>
                   </Link>
                 </div>
@@ -651,11 +881,18 @@ export default function Home() {
           </button>
 
           <div className="relative w-full max-w-5xl max-h-[85vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={lightbox.images[lightbox.index]} 
-              alt="Preview" 
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
-            />
+            <div className="flex w-full flex-col items-center">
+              <img 
+                src={lightbox.images[lightbox.index]} 
+                alt="Preview" 
+                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              />
+              {lightbox.captions[lightbox.index] && (
+                <p className="mt-4 text-sm text-white/70">
+                  {lightbox.captions[lightbox.index]}
+                </p>
+              )}
+            </div>
             {lightbox.images.length > 1 && (
               <>
                 <button 
