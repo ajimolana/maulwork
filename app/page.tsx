@@ -153,13 +153,13 @@ const experiencesData = [
         list: true
       }
     ],
-    heroImage: "https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778929200&v=beta&t=MJNPh177nGEUGWHAJKIofT40k25ICEkC0ax3fiLG1AY",
+    heroImage: "https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1779541200&v=beta&t=ggeWAfe5Nr2fePvfCB43DSlzvn6DWlTTkiCgmaXwtaE",
     gallery: [
-      ["https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1778929200&v=beta&t=MJNPh177nGEUGWHAJKIofT40k25ICEkC0ax3fiLG1AY","Capstone Presentation"],
-      ["https://media.licdn.com/dms/image/v2/D562DAQFd8xtNMMIXWQ/profile-treasury-image-shrink_800_800/B56Z3jwnkrG0AY-/0/1777642668840?e=1778929200&v=beta&t=FGVI_INOMKEYT-4S1o6dIBwUII0k2XJZYYleKbPOLv4","Onboarding"],
-      ["https://media.licdn.com/dms/image/v2/D562DAQGmfBLms9a98g/profile-treasury-image-shrink_800_800/B56Z3jyeiOK4AY-/0/1777643155073?e=1778929200&v=beta&t=6ZWtqk-Yv6HXUUdRQeURgROjngsI04pBwUgVXg7gmtI","Mentors and Partner"],
-      ["https://media.licdn.com/dms/image/v2/D562DAQFcUbzBFBrV8Q/profile-treasury-image-shrink_800_800/B56Z3jwnktKYBM-/0/1777642667345?e=1778929200&v=beta&t=k17V-H5Nd6Z81xNKWmjoxt0sBxktxqD54Lgm_AnA48M","3rd Floor Fellows"],
-      ["https://media.licdn.com/dms/image/v2/D562DAQEJRiUOwpL5tg/profile-treasury-image-shrink_800_800/B56Z3jyeiNHEAY-/0/1777643155060?e=1778929200&v=beta&t=Sg-Rdx3BZlkzitRa5g-NWDsP0DW38tfTqk0NIWfkW9g","Internal Project Fellows"]
+      ["https://media.licdn.com/dms/image/v2/D562DAQGMUUFba6ExVw/profile-treasury-image-shrink_800_800/B56Z3jyeiNKwAY-/0/1777643154684?e=1779541200&v=beta&t=ggeWAfe5Nr2fePvfCB43DSlzvn6DWlTTkiCgmaXwtaE","Capstone Presentation"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQFd8xtNMMIXWQ/profile-treasury-image-shrink_800_800/B56Z3jwnkrG0AY-/0/1777642668840?e=1779541200&v=beta&t=g3GxyMaNaAhE-OiXR0cdl7IXIg6goftanlgjKtnmYj8","Onboarding"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQGmfBLms9a98g/profile-treasury-image-shrink_800_800/B56Z3jyeiOK4AY-/0/1777643155073?e=1779541200&v=beta&t=n954n4IHgPJ4-LCZJOvcIBX4K1UJRizvx_5JFhfyki0","Mentors and Partner"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQFcUbzBFBrV8Q/profile-treasury-image-shrink_800_800/B56Z3jwnktKYBM-/0/1777642667345?e=1779541200&v=beta&t=h8AX5hN69Xi2GXpUJ4Ak7JZVlXu8kMKqkrUKN-m8670","3rd Floor Fellows"],
+      ["https://media.licdn.com/dms/image/v2/D562DAQEJRiUOwpL5tg/profile-treasury-image-shrink_800_800/B56Z3jyeiNHEAY-/0/1777643155060?e=1779541200&v=beta&t=XowNlGQVbBLM1tjD8ya_vzx4TVGKhfZK03Tht8P-fMo","Internal Project Fellows"]
     ],
     link: null
   } 
